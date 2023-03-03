@@ -46,7 +46,9 @@ class App extends Component{
         <Text style={styles.title}>Contador de Pessoas</Text>
         <Text style={styles.contador}>{ this.state.cont }</Text>
         <Button title="Somar" onPress={this.somar}/>
-        <Button color = 'red' title="Subtrair" onPress={this.subtrair} />
+        <View style={styles.botao}>
+          <Button color = 'red' title="Subtrair" onPress={this.subtrair} />
+        </View>
       </View>
     )
   }
@@ -72,7 +74,12 @@ const styles = StyleSheet.create({
   contador: {
     fontSize: 20,
     textAlign: 'center',
-    color: 'red',
-    fontWeight: 'bold'
+    color: 'black',
+    fontWeight: 'bold',
+    paddingBottom: 30
+  },
+  botao: {
+    paddingTop: 10
   }
+
 });
