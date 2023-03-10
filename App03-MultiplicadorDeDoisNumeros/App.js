@@ -14,7 +14,7 @@ class App extends Component{
   constructor(props){
     super(props);
     this.state = {
-      resultado: 0,
+      resultado: '',
       n1: 0,
       n2: 0
     };
@@ -22,25 +22,36 @@ class App extends Component{
     this.multiplicar = this.multiplicar.bind(this);
   }
   
-  
   multiplicar(){
-    this.setState({
-      n1: this.state.n1,
-      n2: this.state.n2,
-      resultado: this.state.n1 * this.state.n2
-    });
+    if((this.state.numero1 === '') || (this.state.numero2 === '')){
+      alert("Digita ai!");
+    }
+    res = this.state.numero1 * this.state.numero2
+    this.setState({resultado: res})
+
   }
 
   render(){
     return(
       <View style={styles.container}>
-        <Text style={styles.title}>Resultado Da Multiplicação</Text>
-        <Text style={styles.contador}>{ this.state.resultado }</Text>
-        <TextInput style={styles.input} value={this.state.n1}/>
-        <TextInput style={styles.input} value={this.state.n2}/>
+        <Text style={styles.title}>Multiplicador de Números</Text>
+        <TextInput
+      style={styles.input}
+      placeholder="Digite o primeiro número"
+      onChangeText={ (valor) => this.setState({numero1: valor})}
+      keyboardType="numeric"
+      />
+        <TextInput
+      style={styles.input}
+      placeholder="Digite o segundo número"
+      onChangeText={ (valor) => this.setState({numero2: valor})}
+      keyboardType="numeric"
+      />
         <View style={styles.botao}>
           <Button color = 'purple' title="Calcular" onPress={this.multiplicar} />
         </View>
+        <Text style={styles.title}>Resultado Da Multiplicação</Text>
+        <Text style={styles.contador}>{ this.state.resultado }</Text>
       </View>
     )
   }
