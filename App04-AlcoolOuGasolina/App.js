@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Text, View, Button, StyleSheet, TextInput } from 'react-native';
+import { Text, View, Button, StyleSheet, TextInput, Image } from 'react-native';
 import Constants from 'expo-constants';
 
 // You can import from local files
@@ -8,7 +8,7 @@ import AssetExample from './components/AssetExample';
 // or any pure javascript modules available in npm
 import { Card } from 'react-native-paper';
 
-img = 'https://avatars.githubusercontent.com/u/51165259?v=4';
+img = 'http://complemento.veja.abril.com.br/economia/calculadora-combustivel/img/abre.jpg';
 
 class App extends Component{
   constructor(props){
@@ -24,15 +24,16 @@ class App extends Component{
   
   calcular(){
     if((this.state.gasolina === '') || (this.state.alcool === '')){
-      alert("Digita ai!")
+      alert("Digita ai!");
+      this.setState({resultado: ''})
       return;
     }
     
     res = (this.state.alcool / this.state.gasolina )
     if(res > 0.7){
-      this.setState({resultado: 'Gasolina'})
+      this.setState({resultado: 'Resultado: Gasolina È mais vantajosa'})
     }else{
-      this.setState({resultado: 'Alcool'})
+      this.setState({resultado: 'Resultado: ¡lcool È mais vantajoso'})
     }
     //this.setState({resultado: res})
 
@@ -41,26 +42,24 @@ class App extends Component{
   render(){
     return(
       <View style={styles.container}>
-        <View style={styles.imagemview}>
-          <Image source={{ uri: img}} style={{width: 200, height: 200, borderRadius: 200/2}}/>
+        <View style={styles.imagemView}>
+          <Image source={{ uri: img}} style={{width: 350, height: 185, alignItems: 'center'}}/>
         </View>
-        <Text style={styles.title}>√Ålcool ou Gasolina</Text>
         <TextInput
-      style={styles.input}
-      placeholder="Valor da Gasolina"
-      onChangeText={ (valor) => this.setState({gasolina: valor})}
-      keyboardType="numeric"
+          style={styles.input}
+          placeholder="Valor do Alcool" placeholderTextColor='white'
+          onChangeText={ (valor) => this.setState({alcool: valor})}
+          keyboardType="numeric"
       />
         <TextInput
-      style={styles.input}
-      placeholder="Valor do Alcool"
-      onChangeText={ (valor) => this.setState({alcool: valor})}
-      keyboardType="numeric"
+          style={styles.input}
+          placeholder="Valor da Gasolina" placeholderTextColor='white'
+          onChangeText={ (valor) => this.setState({gasolina: valor})}
+          keyboardType="numeric"
       />
         <View style={styles.botao}>
-          <Button color = 'purple' title="Calcular" onPress={this.calcular} />
+          <Button color = '#1b92f8' title="Calcular" onPress={this.calcular} />
         </View>
-        <Text style={styles.title}>Resultado</Text>
         <Text style={styles.contador}>{ this.state.resultado }</Text>
       </View>
     )
@@ -74,20 +73,20 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     paddingTop: Constants.statusBarHeight,
-    backgroundColor: '#ecf0f1',
+    backgroundColor: '#045494',
     padding: 8,
   },
-  title: {
+  titulo: {
     margin: 24,
-    fontSize: 18,
+    fontSize: 24,
     fontWeight: 'bold',
     textAlign: 'center',
-    Fontcolor: 'Red',
+    color: 'white',
   },
   contador: {
     fontSize: 20,
     textAlign: 'center',
-    color: 'black',
+    color: 'white',
     fontWeight: 'bold',
     paddingBottom: 30
   },
@@ -99,7 +98,13 @@ const styles = StyleSheet.create({
     margin: 12,
     borderWidth: 1,
     padding: 10,
-    
+    borderColor: 'white',
+    borderWidth: 3,
+    color: 'white',
+  },
+  imagemView: {
+    justifyContent: 'center',
+    alignItems: 'center',
   }
 
 });
