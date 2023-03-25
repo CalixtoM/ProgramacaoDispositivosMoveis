@@ -1,6 +1,8 @@
 import * as React from 'react';
 import { Text, View, StyleSheet, ScrollView } from 'react-native';
 import Constants from 'expo-constants';
+import { styles } from './styles';
+
 
 // You can import from local files
 import Produto1 from './components/Produto1';
@@ -17,7 +19,7 @@ export default function App() {
         ESPORTINHO.COM
       </Text>
       <Text style={styles.subparagraph}>
-        Camisas de Times e artigos esportivos.
+        Camisas de Times e artigos esportivos
       </Text> 
       <ScrollView style={styles.scr} horizontal={true} showsHorizontalScrollIndicator={false}>
           <Produto1 />
@@ -28,25 +30,3 @@ export default function App() {
   );
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    paddingTop: Constants.statusBarHeight,
-    backgroundColor: '#00FF7F',
-    padding: 8,
-  },
-  paragraph: {
-    fontSize: 22,
-    fontWeight: 'bold',
-    textAlign: 'center',
-  },
-  subparagraph: {
-    fontSize: 18,
-    fontWeight: 'bold',
-    textAlign: 'center',
-  },
-  scr: {
-    weight: 100
-  }
-});
