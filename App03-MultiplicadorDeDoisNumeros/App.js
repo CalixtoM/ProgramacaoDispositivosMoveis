@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, useState } from 'react';
 import { Text, View, Button, StyleSheet, TextInput } from 'react-native';
 import Constants from 'expo-constants';
 
@@ -10,54 +10,42 @@ import { Card } from 'react-native-paper';
 
 
 
-class App extends Component{
-  constructor(props){
-    super(props);
-    this.state = {
-      resultado: '',
-      n1: 0,
-      n2: 0
-    };
-
-    this.multiplicar = this.multiplicar.bind(this);
-  }
+export default function App(){
+  const [resultado, setResultado] = useState(0);
+  const [n1, setN1] = useState(0);
+  const [n2, setN2] = useState(0);
   
-  multiplicar(){
-    if((this.state.numero1 === '') || (this.state.numero2 === '')){
+  function multiplicar(){
+    if((n1 === '') || (n2 === '')){
       alert("Digita ai!");
     }
-    res = this.state.numero1 * this.state.numero2
-    this.setState({resultado: res})
+    setResultado(n1 * n2);
 
   }
 
-  render(){
     return(
       <View style={styles.container}>
         <Text style={styles.title}>Multiplicador de Números</Text>
         <TextInput
       style={styles.input}
       placeholder="Digite o primeiro número"
-      onChangeText={ (valor) => this.setState({numero1: valor})}
+      onChangeText={ (valor) => setN1(valor)}
       keyboardType="numeric"
       />
         <TextInput
       style={styles.input}
       placeholder="Digite o segundo número"
-      onChangeText={ (valor) => this.setState({numero2: valor})}
+      onChangeText={ (valor) => setN2(valor)}
       keyboardType="numeric"
       />
         <View style={styles.botao}>
-          <Button color = 'purple' title="Calcular" onPress={this.multiplicar} />
+          <Button color = 'purple' title="Calcular" onPress={multiplicar} />
         </View>
         <Text style={styles.title}>Resultado Da Multiplicação</Text>
-        <Text style={styles.contador}>{ this.state.resultado }</Text>
+        <Text style={styles.contador}>{ resultado }</Text>
       </View>
     )
-  }
 }
-
-export default App;
 
 const styles = StyleSheet.create({
   container: {
