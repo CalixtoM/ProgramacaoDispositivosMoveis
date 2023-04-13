@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, useState } from 'react';
 import { Text, View, Button, StyleSheet, TextInput, Image } from 'react-native';
 import Constants from 'expo-constants';
 
@@ -10,45 +10,35 @@ import { Card } from 'react-native-paper';
 
 img = 'https://www.saudebemestar.pt/media/89347/obesidade.jpg';
 
-class App extends Component{
-  constructor(props){
-    super(props);
-    this.state = {
-      resultado: '',
-      altura: 0,
-      peso: 0
-    };
-
-    this.calcular = this.calcular.bind(this);
-  }
+export default function App() {
+  const [resultado, setResultado] = useState('');
+  const [altura, setAltura] = useState(0);
+  const [peso, setPeso] = useState(0);
   
-  calcular(){
-    if((this.state.peso === '') || (this.state.altura === '')){
-      alert("Digita ai!");
-      this.setState({resultado: ''})
-      return;
-    }
-    
-    res = (this.state.peso / (this.state.altura * this.state.altura))
+  function calcular(){
+    res = (peso / (altura * altura))
     if(res < 18.5){
-      this.setState({resultado: 'Classificação: Você esta abaixo do peso!'})
+      setResultado('Classificação: Você esta abaixo do peso!');
     }else if(res >= 18.5 && res <= 24.9){
-      this.setState({resultado: 'Classificação: Você esta com peso normal!'})
+      setResultado('Classificação: Você esta com peso normal!');
     }else if(res >= 25 && res <= 29.9){
-      this.setState({resultado: 'Classificação: Você esta com sobrepeso!'})
+      setResultado('Classificação: Você esta com sobrepeso!');
     }
     else if(res >= 30 && res <= 34.9){
-      this.setState({resultado: 'Classificação: Alerta! Você esta com Obesidade Grau I!'})
+      setResultado('Classificação: Alerta! Você esta com Obesidade Grau I!');
     }else if(res >= 35 && res <= 39.9){
-      this.setState({resultado: 'Classificação: Alerta! Você esta com Obesidade Grau II!'})
-    }else{
-      this.setState({resultado: 'Classificação: Vá ao médico! OBESIDADE MÓRBIDA DETECTADA'})
+      setResultado('Classificação: Alerta! Você esta com Obesidade Grau II!');
+    }else if(res > 39.9){
+      setResultado('Classificação: Vá ao médico! OBESIDADE MÓRBIDA DETECTADA');
+    }
+    else{
+      alert("Digita ai!");
+      setResultado('');
     }
 
 
   }
 
-  render(){
     return(
       <View style={styles.container}>
         <View style={styles.imagemView}>
@@ -57,25 +47,23 @@ class App extends Component{
         <TextInput
           style={styles.input}
           placeholder="Informe seu Peso (em Kg)" placeholderTextColor='#1b92f8'
-          onChangeText={ (valor) => this.setState({peso: valor})}
+          onChangeText={ (valor) => setPeso(valor)}
           keyboardType="numeric"
         />
         <TextInput
           style={styles.input}
           placeholder="Informe sua Altura (em Metros)" placeholderTextColor='#1b92f8'
-          onChangeText={ (valor) => this.setState({altura: valor})}
+          onChangeText={ (valor) => setAltura(valor)}
           keyboardType="numeric"
         />
         <View style={styles.botao}>
-          <Button color = '#1b92f8' title="Calcular" onPress={this.calcular} />
+          <Button color = '#1b92f8' title="Calcular" onPress={calcular} />
         </View>
-        <Text style={styles.contador}>{ this.state.resultado }</Text>
+        <Text style={styles.contador}>{ resultado }</Text>
       </View>
     )
-  }
-}
 
-export default App;
+}
 
 const styles = StyleSheet.create({
   container: {
@@ -84,13 +72,6 @@ const styles = StyleSheet.create({
     paddingTop: Constants.statusBarHeight,
     backgroundColor: '#ffff',
     padding: 8,
-  },
-  titulo: {
-    margin: 24,
-    fontSize: 24,
-    fontWeight: 'bold',
-    textAlign: 'center',
-    color: 'white',
   },
   contador: {
     fontSize: 20,
