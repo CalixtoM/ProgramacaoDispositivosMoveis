@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, useState } from 'react';
 import { Text, View, Button, StyleSheet } from 'react-native';
 import Constants from 'expo-constants';
 
@@ -10,51 +10,32 @@ import { Card } from 'react-native-paper';
 
 
 
-class App extends Component{
-  constructor(props){
-    super(props);
-    this.state = {
-      cont: 0
-    };
-
-
-    this.somar = this.somar.bind(this);
-    this.subtrair = this.subtrair.bind(this);
-
-    
-    
-  }
+export default function App() {
+  const [cont, setCont] = useState(0);
   
-  somar(){
-    this.setState({
-      cont: this.state.cont + 1
-    });
+  
+  function somar(){
+    setCont(cont+1);
   }
 
-  subtrair(){
-    if(this.state.cont > 0){
-      this.setState({
-        cont: this.state.cont - 1
-      });
+  function subtrair(){
+    if(cont > 0){
+      setCont(cont-1);
     }
     
   }
 
-  render(){
     return(
       <View style={styles.container}>
         <Text style={styles.title}>Contador de Pessoas</Text>
-        <Text style={styles.contador}>{ this.state.cont }</Text>
-        <Button title="Somar" onPress={this.somar}/>
+        <Text style={styles.contador}>{ cont }</Text>
+        <Button title="Somar" onPress={somar}/>
         <View style={styles.botao}>
-          <Button color = 'red' title="Subtrair" onPress={this.subtrair} />
+          <Button color = 'red' title="Subtrair" onPress={subtrair} />
         </View>
       </View>
     )
-  }
 }
-
-export default App;
 
 const styles = StyleSheet.create({
   container: {
