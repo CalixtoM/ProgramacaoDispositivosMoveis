@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, useState } from 'react';
 import { Text, View, Button, StyleSheet, TextInput, Image } from 'react-native';
 import Constants from 'expo-constants';
 
@@ -10,21 +10,13 @@ import { Card } from 'react-native-paper';
 
 img = 'https://images.squarespace-cdn.com/content/v1/55ee0cdbe4b067774286158c/1461325359808-NJ2NZKLI4P30JQSNJ4TE/image-asset.png';
 
-class App extends Component{
-  constructor(props){
-    super(props);
-    this.state = {
-      resultado: ''
-    };
-
-    this.calcular = this.calcular.bind(this);
-  }
+export default function App() {
+  const [resultado, setResultado] = useState('');
   
-  calcular(){
-    this.setState({resultado: Math.floor(Math.random() * 10)})
+  function calcular(){
+    setResultado(Math.floor(Math.random() * 10))
   }
 
-  render(){
     return(
       <View style={styles.container}>
         <View style={styles.titleView}>
@@ -37,16 +29,13 @@ class App extends Component{
           <Text style={styles.titleView}>Pense em um número de 0 a 10</Text>
         </View>
         <View style={styles.botao}>
-          <Button color = '#8b008b' title="Gerar" onPress={this.calcular} />
+          <Button color = '#8b008b' title="Gerar" onPress={calcular} />
         </View>
-        <Text style={styles.contador}>{ this.state.resultado }</Text>
+        <Text style={styles.contador}>{ resultado }</Text>
       </View>
     )
-  }
+  
 }
-
-export default App;
-
 const styles = StyleSheet.create({
   container: {
     flex: 1,
