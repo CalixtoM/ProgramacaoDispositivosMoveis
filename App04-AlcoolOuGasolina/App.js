@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, useState } from 'react';
 import { Text, View, Button, StyleSheet, TextInput, Image } from 'react-native';
 import Constants from 'expo-constants';
 
@@ -10,36 +10,27 @@ import { Card } from 'react-native-paper';
 
 img = 'http://complemento.veja.abril.com.br/economia/calculadora-combustivel/img/abre.jpg';
 
-class App extends Component{
-  constructor(props){
-    super(props);
-    this.state = {
-      resultado: '',
-      gasolina: 0,
-      alcool: 0
-    };
-
-    this.calcular = this.calcular.bind(this);
-  }
+export default function App() {
+  const [resultado, setResultado] = useState('');
+  const [gasolina, setGasolina] = useState(0);
+  const [alcool, setAlcool] = useState(0);
   
-  calcular(){
-    if((this.state.gasolina === '') || (this.state.alcool === '')){
+  function calcular(){
+    if((gasolina === '') || (alcool === '')){
       alert("Digita ai!");
-      this.setState({resultado: ''})
-      return;
+      setResultado(" ");
     }
     
-    res = (this.state.alcool / this.state.gasolina )
+    res = alcool / gasolina;
     if(res > 0.7){
-      this.setState({resultado: 'Resultado: Gasolina é mais vantajosa'})
+      setResultado('Resultado: Gasolina é mais vantajosa')
     }else{
-      this.setState({resultado: 'Resultado: Álcool é mais vantajoso'})
+      setResultado('Resultado: Alcool é mais vantajoso')
     }
     //this.setState({resultado: res})
 
   }
 
-  render(){
     return(
       <View style={styles.container}>
         <View style={styles.imagemView}>
@@ -48,25 +39,22 @@ class App extends Component{
         <TextInput
           style={styles.input}
           placeholder="Valor do Alcool" placeholderTextColor='white'
-          onChangeText={ (valor) => this.setState({alcool: valor})}
+          onChangeText={ (valor) => setAlcool(valor)}
           keyboardType="numeric"
       />
         <TextInput
           style={styles.input}
           placeholder="Valor da Gasolina" placeholderTextColor='white'
-          onChangeText={ (valor) => this.setState({gasolina: valor})}
+          onChangeText={ (valor) => setGasolina(valor)}
           keyboardType="numeric"
       />
         <View style={styles.botao}>
-          <Button color = '#1b92f8' title="Calcular" onPress={this.calcular} />
+          <Button color = '#1b92f8' title="Calcular" onPress={calcular} />
         </View>
-        <Text style={styles.contador}>{ this.state.resultado }</Text>
+        <Text style={styles.contador}>{ resultado }</Text>
       </View>
     )
-  }
 }
-
-export default App;
 
 const styles = StyleSheet.create({
   container: {
@@ -75,13 +63,6 @@ const styles = StyleSheet.create({
     paddingTop: Constants.statusBarHeight,
     backgroundColor: '#045494',
     padding: 8,
-  },
-  titulo: {
-    margin: 24,
-    fontSize: 24,
-    fontWeight: 'bold',
-    textAlign: 'center',
-    color: 'white',
   },
   contador: {
     fontSize: 20,
@@ -99,7 +80,6 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     padding: 10,
     borderColor: 'white',
-    borderWidth: 3,
     color: 'white',
   },
   imagemView: {
